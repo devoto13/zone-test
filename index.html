@@ -6,68 +6,83 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <style type="text/css">
+        body {
+            height: 4000px;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Loaded</h1>
 
 <div id="test"></div>
+<div id="test2"></div>
 
 <script type="text/javascript" src="fetch.js"></script>
 <script type="text/javascript" src="zone.js"></script>
 <script type="text/javascript" src="long-stack-trace-zone.js"></script>
-<script type="text/javascript">function setupIntegrationObject() {
-        var setAPI;
-        var setEnvironmentAPI;
-        var isAPISet = false;
-        var promiseAPI = new Promise(function (resolve) {
-            setAPI = function (api) {
-                if (isAPISet) {
-                    throw new Error('API can be set only once.');
-                }
-                resolve(api);
-                isAPISet = true;
-            };
-        });
-        var isEnvironmentAPISet = false;
-        var promiseEnvironmentAPI = new Promise(function (resolve) {
-            setEnvironmentAPI = function (api) {
-                if (isEnvironmentAPISet) {
-                    throw new Error('Environment API can be set only once.');
-                }
-                resolve(api);
-                isEnvironmentAPISet = true;
-            };
-        });
-        window.STAppRunner = {
-            setAPI: setAPI,
-            getAPI: function () {
-                return promiseAPI;
-            },
-            isAPIReady: function () {
-                return isAPISet;
-            },
-            setEnvironmentAPI: setEnvironmentAPI,
-            getEnvironmentAPI: function () {
-                return promiseEnvironmentAPI;
-            },
-            isEnvironmentAPIReady: function () {
-                return isEnvironmentAPISet;
-            }
-        };
-    }
-    setupIntegrationObject();
-
-    const el = document.getElementById('test');
-
-    STAppRunner.setAPI({
-        setSignals: function (signals) {
-            el.innerText = JSON.stringify(signals);
-
-            STAppRunner.getEnvironmentAPI()
-                .then(function (api) { return api.onSetSignalsResult(null); });
+<script type="text/javascript">
+  function setupIntegrationObject() {
+    var setAPI;
+    var setEnvironmentAPI;
+    var isAPISet = false;
+    var promiseAPI = new Promise(function (resolve) {
+      setAPI = function (api) {
+        if (isAPISet) {
+          throw new Error('API can be set only once.');
         }
+        resolve(api);
+        isAPISet = true;
+      };
     });
+    var isEnvironmentAPISet = false;
+    var promiseEnvironmentAPI = new Promise(function (resolve) {
+      setEnvironmentAPI = function (api) {
+        if (isEnvironmentAPISet) {
+          throw new Error('Environment API can be set only once.');
+        }
+        resolve(api);
+        isEnvironmentAPISet = true;
+      };
+    });
+    window.STAppRunner = {
+      setAPI: setAPI,
+      getAPI: function () {
+        return promiseAPI;
+      },
+      isAPIReady: function () {
+        return isAPISet;
+      },
+      setEnvironmentAPI: setEnvironmentAPI,
+      getEnvironmentAPI: function () {
+        return promiseEnvironmentAPI;
+      },
+      isEnvironmentAPIReady: function () {
+        return isEnvironmentAPISet;
+      }
+    };
+  }
+  setupIntegrationObject();
+
+  const el = document.getElementById('test');
+  const el2 = document.getElementById('test2');
+
+  STAppRunner.setAPI({
+    setSignals: function (signals) {
+      el.innerText = JSON.stringify(signals);
+
+      STAppRunner.getEnvironmentAPI()
+        .then(function (api) {
+          return api.onSetSignalsResult(null);
+        });
+    }
+  });
+
+  window.addEventListener('scroll', function (e) {
+    el2.innerText = e.timeStamp;
+  });
 </script>
 <script type="text/javascript" src="environment_api.js"></script>
 </body>
