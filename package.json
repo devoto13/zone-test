@@ -1,0 +1,10 @@
+{
+  "name": "zone-experiment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "whatwg-fetch": "2.0.2",
+    "zone.js": "0.7.7"
+  }
+}
