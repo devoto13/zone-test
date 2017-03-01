@@ -65,7 +65,7 @@
             el.innerText = JSON.stringify(signals);
 
             STAppRunner.getEnvironmentAPI()
-                .then(function (api) { return api.onSetSignalsResult(error); });
+                .then(function (api) { return api.onSetSignalsResult(null); });
         }
     });
 </script>
