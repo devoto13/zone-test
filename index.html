@@ -83,6 +83,15 @@
   window.addEventListener('scroll', function (e) {
     el2.innerText = e.timeStamp;
   });
+
+  setInterval(
+    function () {
+      STAppRunner.getAPI().then(function (api) {
+        api.setSignals(Math.random());
+      });
+    },
+    100
+  );
 </script>
 <script type="text/javascript" src="environment_api.js"></script>
 </body>
